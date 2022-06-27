@@ -21,6 +21,11 @@ main function reads host/port from env just for an example, flavor it following 
 func Start(host string, port int) {
 	router := mux.NewRouter()
 
+	router.HandleFunc("/name/{PARAM}", GetHello).Methods(http.MethodGet)
+	router.HandleFunc("/bad", GetBadUrl).Methods(http.MethodGet)
+	router.HandleFunc("/data", PostMessage).Methods(http.MethodPost)
+	router.HandleFunc("/headers", PostHeaders).Methods(http.MethodPost)
+
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), router); err != nil {
 		log.Fatal(err)
